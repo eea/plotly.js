@@ -1,5 +1,4 @@
 var Plotly = require('@lib/index');
-var Events = require('@src/lib/events');
 var createGraphDiv = require('../assets/create_graph_div');
 var destroyGraphDiv = require('../assets/destroy_graph_div');
 
@@ -8,59 +7,6 @@ describe('Plotly.___ methods', function() {
     'use strict';
 
     afterEach(destroyGraphDiv);
-
-    describe('Plotly.plot promise', function() {
-        var promise;
-        var promiseGd;
-
-        beforeEach(function(done) {
-            var data = [{ x: [1, 2, 3], y: [4, 5, 6] }];
-
-            promise = Plotly.plot(createGraphDiv(), data, {});
-
-            promise.then(function(gd) {
-                promiseGd = gd;
-                done();
-            });
-        });
-
-        it('should be returned with the graph div as an argument', function() {
-            expect(promiseGd).toBeDefined();
-            expect(typeof promiseGd).toBe('object');
-            expect(promiseGd.data).toBeDefined();
-            expect(promiseGd.layout).toBeDefined();
-        });
-    });
-
-    describe('Plotly.plot promise', function() {
-        var gd;
-        var promise;
-        var promiseRejected = false;
-
-        beforeEach(function(done) {
-            var data = [{ x: [1, 2, 3], y: [4, 5, 6] }];
-
-            gd = createGraphDiv();
-
-            Events.init(gd);
-
-            gd.on('plotly_beforeplot', function() {
-                return false;
-            });
-
-            promise = Plotly.plot(gd, data, {});
-
-            promise.then(null, function() {
-                promiseRejected = true;
-                done();
-            });
-        });
-
-
-        it('should be rejected when plotly_beforeplot event handlers return false', function() {
-            expect(promiseRejected).toBe(true);
-        });
-    });
 
     describe('Plotly.redraw promise', function() {
         var promise;

@@ -73,7 +73,7 @@ describe('@noCIdep Plotly.react', function() {
             subroutines[m].calls.reset();
         });
 
-        // calls to Plotly.newPlot via plot_api.js or Registry.call('plot')
+        // calls to Plotly.newPlot via plot_api.js or Registry.call('_doPlot')
         var plotCalls = plotApi.plot.calls.count() +
             Registry.call.calls.all()
                 .filter(function(d) { return d.args[0] === 'plot'; })
